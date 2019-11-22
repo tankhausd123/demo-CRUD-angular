@@ -1,38 +1,35 @@
-<app-menu [products]="productMess" (product)="value_of_search($event)" ></app-menu>
-<br>
-<div class="container">
-  <div class="row">
-    <div class="col-6">
-      <button class="btn btn-primary" (click)="click()">Show/Hide</button>
+<app-menu  (product)="value_of_search($event)"></app-menu>
+<form>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <button style="background-color: darkorange" class="btn" (click)="click()">Show/Hide</button>
+        <button class="btn btn-primary" routerLink="/products/create">Create</button>
+      </div>
+      <div class="col-6"></div>
     </div>
   </div>
   <div class="container">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
     <div class="row">
-      <div class="col-12">
-        <table class="table table-striped table-dark">
-          <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col" *ngIf="showImage">Image</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let product of productMess let i=index">
-            <th scope="row">{{ i + 1}}</th>
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-            <td *ngIf="showImage">
-              <img src="{{product.image}}" width="{{widthImage}}">
-            </td>
-            <td>
-              <button class="btn btn-danger" (click)="delete(i)">Delete</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <div class="col-3" *ngFor="let product of listProduct | paginate: { itemsPerPage: 4, currentPage: p } ;let i=index">
+        <div class="card">
+          <img class="card-img-top" src="{{product.image}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text">{{product.price}} VNĐ</p>
+            <p class="star"><app-star [stars]="product.star" ></app-star></p>
+            <button class="btn btn-primary" [routerLink]="['/products', i, 'edit']" >Edit</button>
+            <button class="btn btn-danger" (click)="delete(i)">Delete</button>
+          </div>
+        </div>
       </div>
     </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
-</div>
+</form>
+<video autoplay="autoplay" muted="muted" loop="loop">
+  <source
+    src="https://www.rolex.com/content/dam/rolex-58/the-collection/baselworld-2019/new-day-date-36/videos/autoplay/baselworld_2019_new_day-date_36_video_autoplay_0001.mp4"
+    type="video/mp4">
+</video>

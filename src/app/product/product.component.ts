@@ -1,5 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ProductInterface} from './ProductInterface';
+import {ProductService} from '../services/product.service';
+
 
 @Component({
   selector: 'app-product',
@@ -7,46 +9,32 @@ import {ProductInterface} from './ProductInterface';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  constructor() {
+  p = 1;
+
+  constructor(private productService: ProductService) {
   }
 
   showImage = true;
-  widthImage = 100;
+  listProduct = this.productService.getAll();
 
-
-  public Product: ProductInterface[] = [{
-    id: 1,
-    name: 'nautilus 1',
-    price: 3000,
-    image: 'assets/ProductImage/nautilus.jpeg'
-  }, {
-    id: 2,
-    name: 'nautilus 2',
-    price: 3000,
-    image: 'assets/ProductImage/nautilus.jpeg'
-  }, {
-    id: 3,
-    name: 'nautilus 3',
-    price: 3000,
-    image: 'assets/ProductImage/nautilus.jpeg'
-  }];
-  productMess: any = this.Product;
 
   ngOnInit() {
+    this.listProduct = this.productService.getAll();
   }
 
   click() {
     this.showImage = !this.showImage;
   }
+
   value_of_search(value) {
     if (value) {
-      this.productMess = value;
+      this.listProduct = value;
     } else {
-      this.productMess = this.Product;
+      this.listProduct = this.productService.getAll();
     }
   }
 
   delete(id) {
-    this.Product.splice(id, 1);
+    this.listProduct.splice(id, 1);
   }
 }

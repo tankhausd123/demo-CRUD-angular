@@ -1,0 +1,21 @@
+<h1>Edit Product</h1>
+<form>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <header>
+          <div class="form-group">
+            <div class="form-control edit">
+              <label>Name:</label>
+              <input class="form-control" [formControl]="name" value="{{name.value}}">
+              <label>Price:</label>
+              <input class="form-control" [formControl]="price" value="{{price.value}}">
+            </div>
+          </div>
+          <button class="btn btn-primary">Update</button>
+          <button class="btn btn-black" routerLink="/products">Cancel</button>
+        </header>
+      </div>
+    </div>
+  </div>
+</form>

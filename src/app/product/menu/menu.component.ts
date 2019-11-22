@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ProductInterface} from '../ProductInterface';
+import {ProductService} from '../../services/product.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,22 +9,21 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  @Input() products: any;
   @Output() product = new EventEmitter();
 
-  constructor() {
+  constructor(private productService: ProductService) {
   }
+
+  productSearch: ProductInterface[] | ProductService;
+  products = this.productService;
 
   ngOnInit() {
+    this.productSearch = this.products;
   }
 
-  search(event) {
+  productFilter(event) {
     const searchText = event.target.value;
-    if (searchText) {
-      this.products = this.products.filter(product => product.name.includes(searchText));
-    } else {
-      this.products = null;
-    }
-    this.product.emit(this.products);
+    this.productSearch = (event) ? this.productService.search(searchText) : this.products;
+    this.product.emit(this.productSearch);
   }
 }
