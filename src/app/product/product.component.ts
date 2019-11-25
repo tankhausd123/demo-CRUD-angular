@@ -14,6 +14,7 @@ export class ProductComponent implements OnInit {
   constructor(private productService: ProductService) {
   }
 
+  productId;
   showImage = true;
   listProduct = this.productService.getAll();
 
@@ -36,5 +37,8 @@ export class ProductComponent implements OnInit {
 
   delete(id) {
     this.listProduct.splice(id, 1);
+  }
+  findProduct(i: number): ProductInterface {
+    return this.productId = this.productService.findById(i);
   }
 }

@@ -63,7 +63,11 @@ export class ProductService {
   create(product) {
     return this.product.push(product);
   }
-  findById(id) {
+  findById(id: number): ProductInterface {
     return this.product[id];
+  }
+  update(product: ProductInterface,
+         index: number) {
+    this.product[index] = product;
   }
 }

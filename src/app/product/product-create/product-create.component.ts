@@ -9,10 +9,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./product-create.component.css']
 })
 export class ProductCreateComponent implements OnInit {
+  private products = this.productService.getAll();
   productForm = this.fb.group({
-    id: [''],
+    id: [this.products.length + 1],
     name: ['', Validators.required],
     price: ['', Validators.required],
+    image: ['assets/ProductImage/dong-ho.jpg'],
+    star: ['']
   });
 
   constructor(private productService: ProductService,

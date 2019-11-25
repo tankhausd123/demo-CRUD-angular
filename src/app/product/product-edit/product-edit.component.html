@@ -1,5 +1,6 @@
+
 <h1>Edit Product</h1>
-<form>
+<form [formGroup]="productFormEdit" (ngSubmit)="submit()">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -7,9 +8,11 @@
           <div class="form-group">
             <div class="form-control edit">
               <label>Name:</label>
-              <input class="form-control" [formControl]="name" value="{{name.value}}">
+              <input class="form-control" formControlName="name">
               <label>Price:</label>
-              <input class="form-control" [formControl]="price" value="{{price.value}}">
+              <input class="form-control" formControlName="price">
+              <label>Star:</label>
+              <input class="form-control" formControlName="star">
             </div>
           </div>
           <button class="btn btn-primary">Update</button>

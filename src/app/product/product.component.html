@@ -19,7 +19,7 @@
             <h5 class="card-title">{{product.name}}</h5>
             <p class="card-text">{{product.price}} VNĐ</p>
             <p class="star"><app-star [stars]="product.star" ></app-star></p>
-            <button class="btn btn-primary" [routerLink]="['/products', i, 'edit']" >Edit</button>
+            <button class="btn btn-primary" [routerLink]="['/products', i, 'edit']" (click)="findProduct(i)">Edit</button>
             <button class="btn btn-danger" (click)="delete(i)">Delete</button>
           </div>
         </div>
