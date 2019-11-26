@@ -5,7 +5,7 @@ import {ProductCreateComponent} from './product-create/product-create.component'
 import {ProductEditComponent} from './product-edit/product-edit.component';
 import {MenuComponent} from './menu/menu.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Router, RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes} from '@angular/router';
 import {ProductComponent} from './product.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
