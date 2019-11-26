@@ -5,3 +5,6 @@ h1{
 .edit{
   background-color: #32ffeb;
 }
+.error{
+  color: red;
+}

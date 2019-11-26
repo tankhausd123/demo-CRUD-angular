@@ -15,7 +15,7 @@ export class ProductCreateComponent implements OnInit {
     name: ['', Validators.required],
     price: ['', Validators.required],
     image: ['assets/ProductImage/dong-ho.jpg'],
-    star: ['']
+    star: ['', Validators.required]
   });
 
   constructor(private productService: ProductService,
@@ -30,10 +30,6 @@ export class ProductCreateComponent implements OnInit {
     this.route.navigate(['/products']);
   }
 
-  get id() {
-    return this.productForm.get('id');
-  }
-
   get name() {
     return this.productForm.get('name');
   }
@@ -41,5 +37,7 @@ export class ProductCreateComponent implements OnInit {
   get price() {
     return this.productForm.get('price');
   }
-
+  get star() {
+    return this.productForm.get('star');
+  }
 }

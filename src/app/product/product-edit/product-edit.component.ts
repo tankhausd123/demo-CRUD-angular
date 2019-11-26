@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProductService} from '../../services/product.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -22,12 +22,15 @@ export class ProductEditComponent implements OnInit {
     const product = this.productService.findById(this.id);
     this.productFormEdit = this.fb.group({
       id: [product.id],
-      name: [product.name],
-      price: [product.price],
+      name: [product.name, Validators.required],
+      price: [product.price, Validators.required],
       image: [product.image],
-      star: [product.star]
+      star: [product.star, Validators.required]
     });
-    console.log(this.productFormEdit);
+  }
+  submit() {
+    this.productService.update(this.productFormEdit.value, this.id);
+    this.router.navigate(['/products']);
   }
   get name() {
     return this.productFormEdit.get('name');
@@ -35,8 +38,7 @@ export class ProductEditComponent implements OnInit {
   get price() {
     return this.productFormEdit.get('price');
   }
-  submit() {
-    this.productService.update(this.productFormEdit.value, this.id);
-    this.router.navigate(['/products']);
+  get star() {
+    return this.productFormEdit.get('star');
   }
 }
