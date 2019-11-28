@@ -1,73 +1,43 @@
 import {Injectable} from '@angular/core';
 import {ProductInterface} from '../product/ProductInterface';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  private url = 'http://localhost:8000/api/products';
 
-  constructor() {
+
+  constructor(private http: HttpClient) {
   }
 
-  product: ProductInterface[] = [
-    {
-      id: 1,
-      name: 'Rolex Datejust 2019',
-      price: '287.700.000',
-      image: 'assets/ProductImage/rolex.jpg',
-      star: 5
-    }, {
-      id: 2,
-      name: 'Orient ',
-      price: '6.300.000',
-      image: 'assets/ProductImage/orient.jpg',
-      star: 3
-    }, {
-      id: 3,
-      name: 'Patek Philippe Nautilus ',
-      price: '550.000.000',
-      image: 'assets/ProductImage/nautilus.jpeg',
-      star: 5
-    }, {
-      id: 4,
-      name: 'Casio G-SHOCK',
-      price: '10.900.000',
-      image: 'assets/ProductImage/casio.jpg',
-      star: 3
-    }, {
-      id: 5,
-      name: 'Hublot Big Bang',
-      price: '202.500.000',
-      image: 'assets/ProductImage/hublot.jpg',
-      star: 5
-    }, {
-      id: 6,
-      name: 'Seiko 5',
-      price: '3.800.000',
-      image: 'assets/ProductImage/seiko.jpg',
-      star: 4
-    }, {
-      id: 7,
-      name: 'OlymPianus OP990',
-      price: '4.600.000',
-      image: 'assets/ProductImage/olym.jpg',
-      star: 3
-    }];
+  product;
 
-  getAll(): ProductInterface[] {
-    return this.product;
+  getProduct(): Observable<ProductInterface[]> {
+    return this.http.get<ProductInterface[]>(this.url);
   }
-  search(value) {
-    return this.product.filter(product => product.name.indexOf(value) !== -1);
+
+  add(product: ProductInterface): Observable<ProductInterface> {
+    return this.http.post<ProductInterface>(this.url + '/create', product);
   }
-  create(product) {
-    return this.product.push(product);
+
+  findProductById(id: number): Observable<ProductInterface> {
+    return this.http.get<ProductInterface>(this.url + '/' + id);
   }
-  findById(id: number): ProductInterface {
-    return this.product[id];
+
+  update(product, idProduct) {
+    return this.http.put(this.url + '/' + idProduct + '/update', product);
   }
-  update(product: ProductInterface,
-         index: number) {
-    this.product[index] = product;
+
+  delete(idProduct: number): Observable<ProductInterface> {
+    return this.http.delete<ProductInterface>(this.url + '/' + idProduct + '/delete');
+  }
+  searchProduct(textSearch: string) {
+    this.getProduct().subscribe(value => {
+      this.product = value;
+    });
+    return this.product.filter(product => product.name.indexOf(textSearch) !== -1);
   }
 }

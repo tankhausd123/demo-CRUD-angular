@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ProductInterface} from './ProductInterface';
 import {ProductService} from '../services/product.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -9,36 +10,36 @@ import {ProductService} from '../services/product.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+  productList: ProductInterface[] = [];
+
+
   p = 1;
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService,
+              private route: Router) {
   }
-
-  productId;
-  showImage = true;
-  listProduct = this.productService.getAll();
-
-
   ngOnInit() {
-    this.listProduct = this.productService.getAll();
+    this.getAll();
   }
-
-  click() {
-    this.showImage = !this.showImage;
-  }
-
-  value_of_search(value) {
-    if (value) {
-      this.listProduct = value;
+  searchProduct(result) {
+    if (result) {
+      this.productList = result;
     } else {
-      this.listProduct = this.productService.getAll();
+      this.productService.getProduct().subscribe((data: ProductInterface[]) => {
+        this.productList = data;
+      });
     }
   }
 
-  delete(id) {
-    this.listProduct.splice(id, 1);
+  getAll() {
+    this.productService.getProduct().subscribe((data: ProductInterface[]) => {
+      this.productList = data;
+    });
   }
-  findProduct(i: number): ProductInterface {
-    return this.productId = this.productService.findById(i);
+
+  deleteProduct(id) {
+    this.productService.delete(id).subscribe(() => {
+      return this.getAll();
+    });
   }
 }

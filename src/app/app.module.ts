@@ -4,6 +4,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ProductModule} from './product/product.module';
+import { HttpClientModule} from '@angular/common/http';
+
 
 
 
@@ -16,7 +18,8 @@ import {ProductModule} from './product/product.module';
     BrowserModule,
     AppRoutingModule,
     ProductModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

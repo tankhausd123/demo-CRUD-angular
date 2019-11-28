@@ -9,7 +9,11 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./product-edit.component.css']
 })
 export class ProductEditComponent implements OnInit {
-  productFormEdit: FormGroup;
+  productFormEdit = this.fb.group({
+    name: ['', Validators.required],
+    price: ['', Validators.required],
+    star: ['', Validators.required]
+  });
   id = +this.routerMap.snapshot.paramMap.get('id');
 
   constructor(private productService: ProductService,
@@ -19,25 +23,30 @@ export class ProductEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    const product = this.productService.findById(this.id);
-    this.productFormEdit = this.fb.group({
-      id: [product.id],
-      name: [product.name, Validators.required],
-      price: [product.price, Validators.required],
-      image: [product.image],
-      star: [product.star, Validators.required]
+    this.productService.findProductById(this.id).subscribe(data => {
+      this.productFormEdit.patchValue({
+        name: data.name,
+        price: data.price,
+        star: data.star
+      });
     });
   }
-  submit() {
-    this.productService.update(this.productFormEdit.value, this.id);
-    this.router.navigate(['/products']);
+
+  update() {
+    const productData = this.productFormEdit.value;
+    this.productService.update(productData, this.id).subscribe(result => {
+      this.router.navigate(['/products']);
+    });
   }
+
   get name() {
     return this.productFormEdit.get('name');
   }
+
   get price() {
     return this.productFormEdit.get('price');
   }
+
   get star() {
     return this.productFormEdit.get('star');
   }

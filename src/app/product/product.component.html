@@ -1,9 +1,8 @@
-<app-menu  (product)="value_of_search($event)"></app-menu>
+<app-menu (product)="searchProduct($event)"></app-menu>
 <form>
   <div class="container">
     <div class="row">
       <div class="col-6">
-        <button style="background-color: darkorange" class="btn" (click)="click()">Show/Hide</button>
         <button class="btn btn-primary" routerLink="/products/create">Create</button>
       </div>
       <div class="col-6"></div>
@@ -12,15 +11,18 @@
   <div class="container">
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
     <div class="row">
-      <div class="col-3" *ngFor="let product of listProduct | paginate: { itemsPerPage: 4, currentPage: p } ;let i=index">
+      <div class="col-3" *ngFor="let product of productList | paginate: { itemsPerPage: 4, currentPage: p }">
         <div class="card">
-          <img class="card-img-top" src="{{product.image}}" alt="Card image cap">
+          <img class="card-img-top" src="../../assets/ProductImage/nautilus.jpeg"
+               height="195" width="259" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{product.name}}</h5>
             <p class="card-text">{{product.price}} VNĐ</p>
             <p class="star"><app-star [stars]="product.star" ></app-star></p>
-            <button class="btn btn-primary" [routerLink]="['/products', i, 'edit']" (click)="findProduct(i)">Edit</button>
-            <button class="btn btn-danger" (click)="delete(i)">Delete</button>
+            <button class="btn btn-primary" [routerLink]="['/products', product.id, 'edit']">
+              Edit <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" (click)="deleteProduct(product.id)" >Delete <i class="fa fa-trash "></i></button>
           </div>
         </div>
       </div>

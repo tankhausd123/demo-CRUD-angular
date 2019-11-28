@@ -14,16 +14,23 @@ export class MenuComponent implements OnInit {
   constructor(private productService: ProductService) {
   }
 
-  productSearch: ProductInterface[] | ProductService;
-  products = this.productService;
+  productSearch;
 
   ngOnInit() {
-    this.productSearch = this.products;
+    this.productService.getProduct().subscribe((data: ProductInterface[]) => {
+      this.productSearch = data;
+    });
   }
 
   productFilter(event) {
-    const searchText = event.target.value;
-    this.productSearch = (event) ? this.productService.search(searchText) : this.products;
+    const keyWord = event.target.value;
+    if (event) {
+      this.productSearch = this.productService.searchProduct(keyWord);
+    } else {
+      this.productService.getProduct().subscribe((data: ProductInterface[]) => {
+        this.productSearch = data;
+      });
+    }
     this.product.emit(this.productSearch);
   }
 }

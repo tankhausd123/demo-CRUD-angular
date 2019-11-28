@@ -9,9 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./product-create.component.css']
 })
 export class ProductCreateComponent implements OnInit {
-  private products = this.productService.getAll();
   productForm = this.fb.group({
-    id: [this.products.length + 1],
     name: ['', Validators.required],
     price: ['', Validators.required],
     image: ['assets/ProductImage/dong-ho.jpg'],
@@ -24,10 +22,11 @@ export class ProductCreateComponent implements OnInit {
 
   ngOnInit() {
   }
-  submit() {
-    const productNew = this.productForm.value;
-    this.productService.create(productNew);
-    this.route.navigate(['/products']);
+  create() {
+    const newProduct = this.productForm.value;
+    this.productService.add(newProduct).subscribe(data => {
+      this.route.navigate(['/products']);
+    });
   }
 
   get name() {
